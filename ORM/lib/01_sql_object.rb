@@ -10,6 +10,7 @@ class SQLObject
       cols = DBConnection.execute2(<<-SQL)
         SELECT *
         FROM "#{self.table_name}"
+        limit 1
       SQL
       @columns = cols.first.map(&:to_sym)
     end
@@ -27,7 +28,7 @@ class SQLObject
       end
     end
       #TODO -> make it so user doesn't have to call #finalize!
-      # at end of subclass creation!!!
+      # at end of subclass creation!!! (and delete it from the bottom)
   end
 
   def self.table_name=(table_name)
@@ -39,11 +40,17 @@ class SQLObject
   end
 
   def self.all
-    # ...
+    instances = DBConnection.execute(<<-SQL)
+      select *
+      from "#{self.table_name}"
+    SQL
+    self.parse_all(instances)
   end
 
   def self.parse_all(results)
-    # ...
+    results.map do |entry|
+      self.new(entry)
+    end
   end
 
   def self.find(id)
@@ -51,7 +58,13 @@ class SQLObject
   end
 
   def initialize(params = {})
-    # ...
+    params.each do |attr_name, value|
+      if self.class.columns.include?(attr_name.to_sym)
+        self.send("#{attr_name}=", value)
+      else
+        raise "unknown attribute '#{attr_name}'"
+      end
+    end
   end
 
   def attributes
@@ -74,5 +87,5 @@ class SQLObject
     # ...
   end
 
-
+  # self.finalize!
 end
