@@ -54,7 +54,12 @@ class SQLObject
   end
 
   def self.find(id)
-    # ...
+    obj = DBConnection.execute(<<-SQL, id)
+      select *
+      from "#{self.table_name}"
+      where id = ?
+    SQL
+    self.parse_all(obj).first
   end
 
   def initialize(params = {})
@@ -72,19 +77,57 @@ class SQLObject
   end
 
   def attribute_values
-    # ...
+    @attributes.values
+    #TODO does this work??? do I need to calc based on calling attr
+    # methods on each instance?
   end
 
   def insert
-    # ...
+    columns = self.class.columns.dup
+    columns.delete(:id)
+    columns = columns.map(&:to_s).join(", ")
+
+    vals = self.attribute_values
+
+    qmarks = []
+    vals.length.times { qmarks << "?" }
+    qmarks = qmarks.join(", ")
+
+    DBConnection.execute(<<-SQL, *vals)
+      INSERT INTO
+        #{self.class.table_name} (#{columns})
+      VALUES
+        (#{qmarks})
+    SQL
+    self.id = DBConnection.last_insert_row_id
   end
 
   def update
-    # ...
+    columns = self.class.columns.dup
+    columns.delete(:id)
+
+    vals = columns.map do |col|
+      self.attributes[col]
+    end
+
+    columns = columns.map do |col|
+      col.to_s << "= ?"
+    end.join(", ")
+
+    id = self.id
+    
+    DBConnection.execute(<<-SQL, *vals, id)
+      UPDATE
+        #{self.class.table_name}
+      SET
+        #{columns}
+      WHERE
+        #{self.class.table_name}.id = ?
+    SQL
   end
 
   def save
-    # ...
+    self.id.nil? ? self.insert : self.update
   end
 
   # self.finalize!
