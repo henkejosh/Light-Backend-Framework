@@ -16,8 +16,17 @@ class Route
   # use pattern to pull out route params (save for later?)
   # instantiate controller and call controller action
   def run(req, res)
-    controller = @controller_class.new(req, res, {})
-    controller.invoke_action(@http_method)
+    regex = Regexp.new @pattern
+    match_data = regex.match(req.path)
+
+    route_params = {}
+    match_data.names.each do |param|
+      route_params[param] = match_data[param]
+    end
+
+    controller = @controller_class.new(req, res, route_params)
+    controller.invoke_action(@action_name)
+    # regex = Regexp.new "/#{@controller_class}/(?<id>\d+)"
   end
 end
 
@@ -59,8 +68,11 @@ class Router
   # either throw 404 or call run on a matched route
   def run(req, res)
     route = match(req)
-    route.run if route
-    res.status = 404
-    res.write("Route not found")
+    if route
+      route.run(req, res)
+    else
+      res.status = 404
+      res.write("Route not found")
+    end
   end
 end
