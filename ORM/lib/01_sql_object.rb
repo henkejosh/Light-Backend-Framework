@@ -4,6 +4,12 @@ require 'active_support/inflector'
 # NB: the attr_accessor we wrote in phase 0 is NOT used in the rest
 # of this project. It was only a warm up.
 
+
+
+#TODO 1 -> make it so user doesn't have to call #finalize!
+# at end of subclass creation!!! (and delete it from the bottom)
+# TODO 2 --> make insert/update methods private
+
 class SQLObject
   def self.columns
     unless @columns
@@ -27,8 +33,6 @@ class SQLObject
         self.attributes[col] = item
       end
     end
-      #TODO -> make it so user doesn't have to call #finalize!
-      # at end of subclass creation!!! (and delete it from the bottom)
   end
 
   def self.table_name=(table_name)
@@ -115,7 +119,7 @@ class SQLObject
     end.join(", ")
 
     id = self.id
-    
+
     DBConnection.execute(<<-SQL, *vals, id)
       UPDATE
         #{self.class.table_name}
