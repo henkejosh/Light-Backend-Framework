@@ -24,6 +24,7 @@ class ControllerBase
     raise "Double render!" if already_built_response?
     @res['location'] = url
     @res.status = 302
+    @session.store_session(@res)
     @already_built_response = true
   end
 
@@ -34,6 +35,7 @@ class ControllerBase
     raise "Double render!" if already_built_response?
     @res['Content-Type'] = content_type
     @res.write(content)
+    @session.store_session(@res)
     @already_built_response = true
   end
 
@@ -48,17 +50,20 @@ class ControllerBase
     full_path = [dir_path, rest_path].join("/")
     contents = File.read(full_path)
 
-  #  debugger
-    # template_code = File.read(template_fname)
     template = ERB.new(contents).result(binding)
     render_content(template, "text/html")
   end
 
   # method exposing a `Session` object
   def session
+    @session ||= Session.new(@req)
   end
 
   # use this with the router to call action_name (:index, :show, :create...)
   def invoke_action(name)
+    Router.send(name)
+    if !already_built_response?
+      render(name)
+    end
   end
 end
