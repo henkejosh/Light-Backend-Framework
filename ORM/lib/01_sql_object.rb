@@ -1,4 +1,3 @@
-require 'byebug'
 require_relative 'db_connection'
 require 'active_support/inflector'
 # NB: the attr_accessor we wrote in phase 0 is NOT used in the rest
@@ -11,6 +10,7 @@ require 'active_support/inflector'
 # TODO 2 --> make insert/update methods private
 
 class SQLObject
+
   def self.columns
     unless @columns
       cols = DBConnection.execute2(<<-SQL)
