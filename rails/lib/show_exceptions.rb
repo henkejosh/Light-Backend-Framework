@@ -29,23 +29,33 @@ class ShowExceptions
     res.finish
   end
 
-  def find_error_line(e)
+  def find_relevant_code(e)
     trace_last = e.backtrace.first
 
     error_line = trace_last.split(":")[1].to_i
     file = trace_last.split(":").first
-    debugger
 
-    format_code_lines(file, error_line)
+    extract_and_format_relevant_code(file, error_line)
   end
 
-  def format_code_lines(file, error_line)
-    lines = (error_line - 5..error_line + 5).to_a
+  def extract_and_format_relevant_code(file, error_line)
+    line_nos = (error_line - 5..error_line + 5).to_a
     file_code = File.readlines(file)
 
-    relevant_lines = file_code.select.with_index do
-      |ent, idx| lines.include?(idx)
+    relevant_lines = file_code.select.with_index do |ent, idx|
+      line_nos.include?(idx)
     end
+
+    relevant_lines = relevant_lines.map.with_index do |line, i|
+      if line.lstrip[0..2] == "def"
+        relevant_lines[i + 1].insert(0, "&nbsp;")
+      end
+
+      "#{line_nos[i] + 1}:  #{line}"
+    end
+
+    relevant_lines
   end
+
 
 end

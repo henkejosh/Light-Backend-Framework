@@ -1,16 +1,36 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset="utf-8">
     <title>You've got an Error!</title>
+
+    <style >
+
+      ul {
+        list-style: none;
+      }
+
+    </style>
   </head>
+
   <body>
     <h1>Error page!! Code: <%=  %> </h1>
 
     <%= e.message %>
+
     <br/><br/>
-    <%= find_error_line(e) %>
+
+    <% formatted_lines = find_relevant_code(e) %>
+
+    <ul>
+    <% formatted_lines.each do |line| %>
+          <li><%= line %></li>
+      <% end %>
+    </ul>
+
     <br/><br/>
+
     <%= e.backtrace %>
 
   </body>
