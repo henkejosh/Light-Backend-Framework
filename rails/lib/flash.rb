@@ -20,30 +20,6 @@ class Flash
     res.set_cookie('_rails_lite_app_flash', cookie_attrs)
   end
 
-  # def track_cycle
-  #   debugger
-  #   check_and_reset_flash!
-  #
-  #   @cycle += 1 unless @data.empty?
-  #   @now_cycle += 1 if now?
-  # end
-  #
-  # def check_and_reset_flash!
-  #   if @cycle >= 2
-  #     @data = {}
-  #     @cycle = 0
-  #   end
-  #
-  #   if @now_cycle >= 1
-  #     @now_cycle = 0
-  #     @now = {}
-  #   end
-  # end
-  #
-  # def now?
-  #   @now && !@now.empty?
-  # end
-
   def [](key)
     @data[key] || @now[key]
   end
