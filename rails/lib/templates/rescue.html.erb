@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>You've got an Error!</title>
+  </head>
+  <body>
+    <h1>Error page!! Code: <%= debugger %> </h1>
+
+    <%= e.message %>
+    <br/><br/>
+    <%= find_error_line(e) %>
+    <br/><br/>
+    <%= e.backtrace %>
+
+  </body>
+</html>
