@@ -23,9 +23,9 @@ class ShowExceptions
     body = ERB.new(content).result(binding)
 
     res = Rack::Response.new
-    res['Content-Type'] = 'text/html'
+    res['Content-type'] = 'text/html'
     res.write(body)
-    res.status = 500
+    res.status = "500"
     res.finish
   end
 
