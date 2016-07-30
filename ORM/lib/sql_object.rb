@@ -1,15 +1,15 @@
 require_relative 'db_connection'
 require 'active_support/inflector'
-# NB: the attr_accessor we wrote in phase 0 is NOT used in the rest
-# of this project. It was only a warm up.
-
-
+require_relative 'searchable'
+require_relative 'associatable'
 
 #TODO 1 -> make it so user doesn't have to call #finalize!
 # at end of subclass creation!!! (and delete it from the bottom)
 # TODO 2 --> make insert/update methods private
 
 class SQLObject
+  extend Searchable
+  extend Associatable
 
   def self.columns
     unless @columns
