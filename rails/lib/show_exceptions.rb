@@ -31,6 +31,21 @@ class ShowExceptions
 
   def find_error_line(e)
     trace_last = e.backtrace.first
+
+    error_line = trace_last.split(":")[1].to_i
+    file = trace_last.split(":").first
+    debugger
+
+    format_code_lines(file, error_line)
+  end
+
+  def format_code_lines(file, error_line)
+    lines = (error_line - 5..error_line + 5).to_a
+    file_code = File.readlines(file)
+
+    relevant_lines = file_code.select.with_index do
+      |ent, idx| lines.include?(idx)
+    end
   end
 
 end
