@@ -14,6 +14,7 @@ class ControllerBase
     @req = req
     @res = res
     @params = route_params.merge(@req.params)
+    @@protected_from_forgery ||= false
     #TODO -> allow for defining routes as strings like normal Rails
   end
 
@@ -75,8 +76,33 @@ class ControllerBase
     @flash ||= Flash.new(@req)
   end
 
+  def generate_form_authenticity_token
+    @token ||= SecureRandom::urlsafe_base64(16)
+  end
+
+  def form_authenticity_token
+    generate_form_authenticity_token
+    @res.set_cookie('authenticity_token', value: @token, path: "/")
+    @token
+  end
+
+  def check_authenticity_token
+    token = @req.cookies['authenticity_token']
+    unless token && token == params['authenticity_token']#@token
+      raise "Invalid authenticity token"
+    end
+  end
+
+  def self.protect_from_forgery
+    @@protected_from_forgery = true
+  end
+
   # use this with the router to call action_name (:index, :show, :create...)
   def invoke_action(name)
+    if @@protected_from_forgery && @req.request_method != "GET"
+      check_authenticity_token
+    end
+
     self.send(name)
     if !already_built_response?
       render(name)

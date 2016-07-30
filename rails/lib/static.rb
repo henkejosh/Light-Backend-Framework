@@ -9,7 +9,7 @@ class Static#Router
     p "Calling Static App"
     req = Rack::Request.new(env)
 
-    # debugger
+    debugger
     if root_path?(req.path)
       res = @file_server.call(env)
     else
