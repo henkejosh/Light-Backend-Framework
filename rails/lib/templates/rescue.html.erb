@@ -15,12 +15,14 @@
   </head>
 
   <body>
-    <h1>Error page!! Code: <%=  %> </h1>
+    <h1>Error!!</h1>
 
     <%= e.message %>
 
     <br/><br/>
 
+    <h2>Error Source</h2>
+    <h4>File: <%= e.backtrace.first.split(":").first %></h4>
     <% formatted_lines = find_relevant_code(e) %>
 
     <ul>
@@ -29,9 +31,14 @@
       <% end %>
     </ul>
 
-    <br/><br/>
+    <h2>Stack Trace</h2>
 
-    <%= e.backtrace %>
+    <% trace = e.backtrace %>
+    <ul>
+      <% trace.each do |line| %>
+      <li><%= line + "\n"%></li>
+      <% end %>
+    </ul>
 
   </body>
 </html>

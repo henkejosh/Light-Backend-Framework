@@ -51,11 +51,17 @@ class ShowExceptions
         relevant_lines[i + 1].insert(0, "&nbsp;")
       end
 
-      "#{line_nos[i] + 1}:  #{line}"
+      if line_nos[i] == error_line
+        "#{line_nos[i] + 1}:  #{line} <<-- ERROR "
+      else
+        "#{line_nos[i] + 1}:  #{line}"
+      end
     end
 
     relevant_lines
   end
 
-
+  def format_stack_trace(e)
+    trace = e.backtrace
+  end
 end
