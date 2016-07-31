@@ -1,15 +1,19 @@
 require_relative 'db_connection'
 require 'active_support/inflector'
 require_relative 'searchable'
-require_relative 'associatable'
+require_relative './associations/associatable'
+require_relative 'attr_accessor_object'
 
 #TODO 1 -> make it so user doesn't have to call #finalize!
 # at end of subclass creation!!! (and delete it from the bottom)
-# TODO 2 --> make insert/update methods private
 
-class SQLObject
+# should be called class ModelBase?? --> this is AR base that models
+# descend from
+
+class ORMModelBase
   extend Searchable
   extend Associatable
+  extend AttrAccessorObject
 
   def self.columns
     unless @columns
@@ -86,6 +90,11 @@ class SQLObject
     # methods on each instance?
   end
 
+  def save
+    self.id.nil? ? self.insert : self.update
+  end
+
+  private
   def insert
     columns = self.class.columns.dup
     columns.delete(:id)
@@ -130,9 +139,6 @@ class SQLObject
     SQL
   end
 
-  def save
-    self.id.nil? ? self.insert : self.update
-  end
-
-  # self.finalize!
+  # TODO -> make sure calling finalize! here works as expected.
+  self.finalize!
 end
