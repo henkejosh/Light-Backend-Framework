@@ -1,19 +1,11 @@
 #TODO -> make it so that this actually works as an attr_accessor
-# 2) add attr_reader
-# 3) add attr_writer
+# probably need to make it a module to extend in models?
+# or can I just descend models from this class??
 
-
-class AttrAccessorObject
+module AttrAccessorObject
   def self.attr_accessor(*names)
-    names.each do |name|
-      define_method(name) do
-        instance_variable_get("@#{name}")
-      end
-
-      define_method("#{name}=") do |item|
-        instance_variable_set("@#{name}", item)
-      end
-    end
+    self.attr_reader(*names)
+    self.attr_writer(*names)
   end
 
   def self.attr_reader(*names)

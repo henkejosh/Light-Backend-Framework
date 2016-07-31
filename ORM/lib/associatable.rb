@@ -1,11 +1,12 @@
 require_relative 'searchable'
 require 'active_support/inflector'
 require 'byebug'
+require_relative 'attr_accessor_object'
 
 # TODO!! -- Extensions
 # Extension Ideas
 #
-# Write where so that it is lazy and stackable. Implement a Relation class.
+# Write 'where' so that it is lazy and stackable. Implement a Relation class.
 # Validation methods/validator class.
 # has_many :through
 #   This should handle both belongs_to => has_many and has_many => belongs_to.
@@ -13,6 +14,8 @@ require 'byebug'
 # joins
 
 class AssocOptions
+  extend AttrAccessorObject
+
   attr_accessor(
     :foreign_key,
     :class_name,

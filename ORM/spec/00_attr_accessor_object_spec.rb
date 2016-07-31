@@ -2,7 +2,8 @@ require 'attr_accessor_object'
 
 describe AttrAccessorObject do
   before(:all) do
-    class MyAttrAccessorObject < AttrAccessorObject
+    class MyAttrAccessorObject
+      extend AttrAccessorObject
       attr_accessor :x, :y
     end
   end
