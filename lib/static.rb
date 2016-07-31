@@ -1,4 +1,5 @@
-class Static#Router
+# Middleware
+class Static
   def initialize(app)
     @root_dir = :public
     @app = app
@@ -6,7 +7,6 @@ class Static#Router
   end
 
   def call(env)
-    p "Calling Static App"
     req = Rack::Request.new(env)
 
     debugger

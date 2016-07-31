@@ -1,4 +1,5 @@
 require 'erb'
+# Middleware
 
 class ShowExceptions
   attr_reader :app
@@ -12,8 +13,6 @@ class ShowExceptions
     rescue Exception => e
       render_exception(e)
   end
-
-  private
 
   def render_exception(e)
     dir_path = File.dirname(__FILE__)

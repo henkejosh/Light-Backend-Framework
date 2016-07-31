@@ -1,8 +1,6 @@
 require 'json'
 
 class Flash
-  attr_writer :cycle, :now_cycle
-
   attr_reader :now
 
   def initialize(req)
@@ -11,8 +9,6 @@ class Flash
 
     @data = FlashStore.new
     @now = FlashStore.new(message)
-    @cycle = 0
-    @now_cycle = 0
   end
 
   def store_flash(res)
