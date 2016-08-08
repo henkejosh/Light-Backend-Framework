@@ -30,7 +30,7 @@ Improve my understanding of:
    **Specs:**  
    * CSRF protection (::protect_from_forgery)
    * Form authentication (#form_authenticity_token)
-   * Access Session, Flash, Flash#now, and Params objects
+   * Access Session, Flash, Flash#now, and Params objects for storing data on the client
    * Intelligently render and redirect without specifying a path (similar to Rails)
 
 ###3. Router  
