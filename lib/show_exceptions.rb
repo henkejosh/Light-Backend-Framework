@@ -1,5 +1,4 @@
 require 'erb'
-# Middleware
 
 class ShowExceptions
   attr_reader :app

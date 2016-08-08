@@ -9,7 +9,6 @@ class Static
   def call(env)
     req = Rack::Request.new(env)
 
-    debugger
     if root_path?(req.path)
       res = @file_server.call(env)
     else
