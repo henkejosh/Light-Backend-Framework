@@ -6,7 +6,7 @@ A lightweight Ruby web framework that follows the MVC architecture pattern and u
 Additionally, I implemented two simple Rack middlewares: Show Exceptions and Static Assets.
 
 ##Goals
-To improve my understanding of:
+Improve my understanding of:
  1. The MVC pattern
  2. Rails & ActiveRecord
  3. Client, server, middleware, web app, and database interactions.
