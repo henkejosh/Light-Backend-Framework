@@ -9,19 +9,19 @@ Additionally, I implemented two simple Rack middlewares: Show Exceptions and Sta
 To improve my understanding of:
  1. The MVC pattern
  2. Rails & ActiveRecord
- 3. How a client, server, middleware, web app, and database all interact.
+ 3. Client, server, middleware, web app, and database interactions.
 
 ##Overview  
 ###1. ModelBase  
-   A superclass your models can inherit from - built to simplify interacting with your database. Search your DB using Ruby (not SQL), map data to Ruby objects for easy manipulation, quickly access related data through associations, and efficiently create reader/writer methods using attr_accessors.
+   A superclass your models can inherit from - built to simplify interacting with your database and reduce superfluous code. Search your DB using Ruby (not SQL), map data to Ruby objects for easy manipulation, quickly access related data through associations, and efficiently create reader/writer methods using attr_accessors.
 
    **Specs:**  
-   * Easily find data related to a given model
+   * Find data related to a given model using Ruby
      * All columns in a model's table have reader & writer methods
      * Search your DB using #where, #find, #all
      * Set up Associations: has_many, belongs_to, has_one_through
-   * Modify DB data using Ruby Objects
-     * #insert, #update, #save
+   * Modify your database directly with Ruby Objects
+     * #save, #insert, #update
    * Quickly define methods using attr_reader, attr_writer, and attr_accessor
 
 ###2. ControllerBase  
