@@ -41,6 +41,7 @@ To improve my understanding of:
    * Matches the URI path and HTTP methods to call the appropriate action on the appropriate controller
    * Creates a Params Object to house request parameters and provides access to it via the Controller
 
+##Extras
 ###Middlewares  
    1. Show Exceptions  
     * Catches exceptions thrown by an application and renders a custom error page with a stack trace and code snippets from the error source.
