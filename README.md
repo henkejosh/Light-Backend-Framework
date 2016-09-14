@@ -34,6 +34,12 @@ Improve my understanding of:
         SQL
         self.parse_all(obj).first
       end
+
+      def self.parse_all(results)
+        results.map do |entry|
+          self.new(entry)
+        end
+      end
 ```
 
 ###2. ControllerBase  
