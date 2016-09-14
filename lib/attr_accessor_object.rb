@@ -1,7 +1,3 @@
-#TODO -> make it so that this actually works as an attr_accessor
-# probably need to make it a module to extend in models?
-# or can I just descend models from this class??
-
 module AttrAccessorObject
   def self.attr_accessor(*names)
     self.attr_reader(*names)

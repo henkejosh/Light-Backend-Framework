@@ -4,12 +4,6 @@ require_relative 'searchable'
 require_relative './associations/associatable'
 require_relative 'attr_accessor_object'
 
-#TODO 1 -> make it so user doesn't have to call #finalize!
-# at end of subclass creation!!! (and delete it from the bottom)
-
-# should be called class ModelBase?? --> this is AR base that models
-# descend from
-
 class ORMModelBase
   extend Searchable
   extend Associatable
@@ -86,8 +80,6 @@ class ORMModelBase
 
   def attribute_values
     @attributes.values
-    #TODO does this work??? do I need to calc based on calling attr
-    # methods on each instance?
   end
 
   def save

@@ -3,16 +3,6 @@ require_relative 'belongs_to_options'
 require_relative 'has_many_options'
 require 'active_support/inflector'
 
-# TODO!! -- Extensions
-# Extension Ideas
-#
-# Write 'where' so that it is lazy and stackable. Implement a Relation class.
-# Validation methods/validator class.
-# has_many :through
-#   This should handle both belongs_to => has_many and has_many => belongs_to.
-# Write an includes method that does pre-fetching.
-# joins
-
 module Associatable
   def belongs_to(name, options = {})
     self.assoc_options[name] = BelongsToOptions.new(name, options)
@@ -75,3 +65,12 @@ module Associatable
     end
   end
 end
+
+# TODO!! -- Extensions
+# Extension Ideas
+# Write 'where' so that it is lazy and stackable. Implement a Relation class.
+# Validation methods/validator class.
+# has_many :through
+#   This should handle both belongs_to => has_many and has_many => belongs_to.
+# Write an includes method that does pre-fetching.
+# joins
